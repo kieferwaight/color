@@ -11,23 +11,23 @@ const {throws} = assert;
 
 it('Color() instance', () => {
 	equal(new Color('red').red(), 255);
-	ok((new Color()) instanceof Color);
+	ok(new Color() instanceof Color);
 	const c = Color();
 	notStrictEqual(c.rgb(), c.rgb());
 });
 
 it('Color() instance (null)', () => {
-	ok((new Color(null)) instanceof Color);
+	ok(new Color(null) instanceof Color);
 });
 
 it('Color() instance (undefined)', () => {
-	ok((new Color(undefined)) instanceof Color);
+	ok(new Color(undefined) instanceof Color);
 });
 
 it('Immutability', () => {
-	const c = Color(0xFF0000);
+	const c = Color(0xff0000);
 	ok(c !== c.rgb());
-	ok(c != c.rgb()); // eslint-disable-line eqeqeq
+	ok(c != c.rgb());
 });
 
 it('Colors to JSON', () => {
@@ -82,52 +82,77 @@ it('Colors to JSON', () => {
 		valpha: 0.4,
 	});
 
-	deepEqual(Color({
-		r: 10,
-		g: 30,
-		b: 25,
-	}).rgb().toJSON(), {
-		color: [10, 30, 25],
-		model: 'rgb',
-		valpha: 1,
-	});
-	deepEqual(Color({
-		h: 10,
-		s: 30,
-		l: 25,
-	}).hsl().toJSON(), {
-		color: [10, 30, 25],
-		model: 'hsl',
-		valpha: 1,
-	});
-	deepEqual(Color({
-		h: 10,
-		s: 30,
-		v: 25,
-	}).hsv().toJSON(), {
-		color: [10, 30, 25],
-		model: 'hsv',
-		valpha: 1,
-	});
-	deepEqual(Color({
-		h: 10,
-		w: 30,
-		b: 25,
-	}).hwb().toJSON(), {
-		color: [10, 30, 25],
-		model: 'hwb',
-		valpha: 1,
-	});
-	deepEqual(Color({
-		c: 10,
-		m: 30,
-		y: 25,
-		k: 10,
-	}).cmyk().toJSON(), {
-		color: [10, 30, 25, 10],
-		model: 'cmyk',
-		valpha: 1,
-	});
+	deepEqual(
+		Color({
+			r: 10,
+			g: 30,
+			b: 25,
+		})
+			.rgb()
+			.toJSON(),
+		{
+			color: [10, 30, 25],
+			model: 'rgb',
+			valpha: 1,
+		},
+	);
+	deepEqual(
+		Color({
+			h: 10,
+			s: 30,
+			l: 25,
+		})
+			.hsl()
+			.toJSON(),
+		{
+			color: [10, 30, 25],
+			model: 'hsl',
+			valpha: 1,
+		},
+	);
+	deepEqual(
+		Color({
+			h: 10,
+			s: 30,
+			v: 25,
+		})
+			.hsv()
+			.toJSON(),
+		{
+			color: [10, 30, 25],
+			model: 'hsv',
+			valpha: 1,
+		},
+	);
+	deepEqual(
+		Color({
+			h: 10,
+			w: 30,
+			b: 25,
+		})
+			.hwb()
+			.toJSON(),
+		{
+			color: [10, 30, 25],
+			model: 'hwb',
+			valpha: 1,
+		},
+	);
+	deepEqual(
+		Color({
+			c: 10,
+			m: 30,
+			y: 25,
+			k: 10,
+		})
+			.cmyk()
+			.toJSON(),
+		{
+			color: [10, 30, 25, 10],
+			model: 'cmyk',
+			valpha: 1,
+		},
+	);
 });
 
 it('Color() argument', () => {
@@ -186,53 +211,78 @@ it('Color() argument', () => {
 		alpha: 0.4,
 	});
 
-	deepEqual(Color({
-		r: 10,
-		g: 30,
-		b: 25,
-	}).rgb().object(), {
-		r: 10,
-		g: 30,
-		b: 25,
-	});
-	deepEqual(Color({
-		h: 10,
-		s: 30,
-		l: 25,
-	}).hsl().object(), {
-		h: 10,
-		s: 30,
-		l: 25,
-	});
-	deepEqual(Color({
-		h: 10,
-		s: 30,
-		v: 25,
-	}).hsv().object(), {
-		h: 10,
-		s: 30,
-		v: 25,
-	});
-	deepEqual(Color({
-		h: 10,
-		w: 30,
-		b: 25,
-	}).hwb().object(), {
-		h: 10,
-		w: 30,
-		b: 25,
-	});
-	deepEqual(Color({
-		c: 10,
-		m: 30,
-		y: 25,
-		k: 10,
-	}).cmyk().object(), {
-		c: 10,
-		m: 30,
-		y: 25,
-		k: 10,
-	});
+	deepEqual(
+		Color({
+			r: 10,
+			g: 30,
+			b: 25,
+		})
+			.rgb()
+			.object(),
+		{
+			r: 10,
+			g: 30,
+			b: 25,
+		},
+	);
+	deepEqual(
+		Color({
+			h: 10,
+			s: 30,
+			l: 25,
+		})
+			.hsl()
+			.object(),
+		{
+			h: 10,
+			s: 30,
+			l: 25,
+		},
+	);
+	deepEqual(
+		Color({
+			h: 10,
+			s: 30,
+			v: 25,
+		})
+			.hsv()
+			.object(),
+		{
+			h: 10,
+			s: 30,
+			v: 25,
+		},
+	);
+	deepEqual(
+		Color({
+			h: 10,
+			w: 30,
+			b: 25,
+		})
+			.hwb()
+			.object(),
+		{
+			h: 10,
+			w: 30,
+			b: 25,
+		},
+	);
+	deepEqual(
+		Color({
+			c: 10,
+			m: 30,
+			y: 25,
+			k: 10,
+		})
+			.cmyk()
+			.object(),
+		{
+			c: 10,
+			m: 30,
+			y: 25,
+			k: 10,
+		},
+	);
 });
 
 it('Setters', () => {
@@ -258,26 +308,36 @@ it('Setters', () => {
 		b: 25,
 		alpha: 0.4,
 	});
-	deepEqual(Color.rgb({
-		r: 10,
-		g: 30,
-		b: 25,
-	}).rgb().object(), {
-		r: 10,
-		g: 30,
-		b: 25,
-	});
-	deepEqual(Color.rgb({
-		r: 10,
-		g: 30,
-		b: 25,
-		alpha: 0.4,
-	}).rgb().object(), {
-		r: 10,
-		g: 30,
-		b: 25,
-		alpha: 0.4,
-	});
+	deepEqual(
+		Color.rgb({
+			r: 10,
+			g: 30,
+			b: 25,
+		})
+			.rgb()
+			.object(),
+		{
+			r: 10,
+			g: 30,
+			b: 25,
+		},
+	);
+	deepEqual(
+		Color.rgb({
+			r: 10,
+			g: 30,
+			b: 25,
+			alpha: 0.4,
+		})
+			.rgb()
+			.object(),
+		{
+			r: 10,
+			g: 30,
+			b: 25,
+			alpha: 0.4,
+		},
+	);
 
 	deepEqual(Color.hsl([260, 10, 10]).hsl().object(), {
 		h: 260,
@@ -336,43 +396,74 @@ it('Translations', () => {
 });
 
 it('Array getters', () => {
-	deepEqual(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-	}).rgb().array(), [10, 20, 30]);
-	deepEqual(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-	}).unitArray(), [10 / 255, 20 / 255, 30 / 255]);
-	deepEqual(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-		alpha: 0.5,
-	}).unitArray(), [10 / 255, 20 / 255, 30 / 255, 0.5]);
-	deepEqual(Color({
-		h: 10,
-		s: 20,
-		l: 30,
-	}).hsl().array(), [10, 20, 30]);
-	deepEqual(Color({
-		h: 10,
-		s: 20,
-		v: 30,
-	}).hsv().array(), [10, 20, 30]);
-	deepEqual(Color({
-		h: 10,
-		w: 20,
-		b: 30,
-	}).hwb().array(), [10, 20, 30]);
-	deepEqual(Color({
-		c: 10,
-		m: 20,
-		y: 30,
-		k: 40,
-	}).cmyk().array(), [10, 20, 30, 40]);
+	deepEqual(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+		})
+			.rgb()
+			.array(),
+		[10, 20, 30],
+	);
+	deepEqual(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+		}).unitArray(),
+		[10 / 255, 20 / 255, 30 / 255],
+	);
+	deepEqual(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+			alpha: 0.5,
+		}).unitArray(),
+		[10 / 255, 20 / 255, 30 / 255, 0.5],
+	);
+	deepEqual(
+		Color({
+			h: 10,
+			s: 20,
+			l: 30,
+		})
+			.hsl()
+			.array(),
+		[10, 20, 30],
+	);
+	deepEqual(
+		Color({
+			h: 10,
+			s: 20,
+			v: 30,
+		})
+			.hsv()
+			.array(),
+		[10, 20, 30],
+	);
+	deepEqual(
+		Color({
+			h: 10,
+			w: 20,
+			b: 30,
+		})
+			.hwb()
+			.array(),
+		[10, 20, 30],
+	);
+	deepEqual(
+		Color({
+			c: 10,
+			m: 20,
+			y: 30,
+			k: 40,
+		})
+			.cmyk()
+			.array(),
+		[10, 20, 30, 40],
+	);
 });
 
 it('Multiple times', () => {
@@ -386,88 +477,152 @@ it('Multiple times', () => {
 });
 
 it('Channel getters/setters', () => {
-	equal(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-		alpha: 0.4,
-	}).alpha(), 0.4);
-	equal(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-		alpha: 0.4,
-	}).alpha(0.7).alpha(), 0.7);
-	equal(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-	}).red(), 10);
-	equal(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-	}).red(100).red(), 100);
-	equal(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-	}).green(), 20);
-	equal(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-	}).green(200).green(), 200);
-	equal(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-	}).blue(), 30);
-	equal(Color({
-		r: 10,
-		g: 20,
-		b: 30,
-	}).blue(60).blue(), 60);
-	equal(Color({
-		h: 10,
-		s: 20,
-		l: 30,
-	}).hue(), 10);
-	equal(Color({
-		h: 10,
-		s: 20,
-		l: 30,
-	}).hue(100).hue(), 100);
-	equal(Color({
-		h: 10,
-		w: 20,
-		b: 30,
-	}).hue(), 10);
-	equal(Color({
-		h: 10,
-		w: 20,
-		b: 30,
-	}).hue(100).hue(), 100);
-	equal(Color({
-		h: 10,
-		s: 20,
-		l: 30,
-	}).hue(), 10);
-	equal(Color({
-		h: 10,
-		s: 20,
-		l: 30,
-	}).hue(460).hue(), 100);
-	equal(Color({
-		h: 10,
-		w: 20,
-		b: 30,
-	}).hue(), 10);
-	equal(Color({
-		h: 10,
-		w: 20,
-		b: 30,
-	}).hue(-260).hue(), 100);
+	equal(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+			alpha: 0.4,
+		}).alpha(),
+		0.4,
+	);
+	equal(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+			alpha: 0.4,
+		})
+			.alpha(0.7)
+			.alpha(),
+		0.7,
+	);
+	equal(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+		}).red(),
+		10,
+	);
+	equal(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+		})
+			.red(100)
+			.red(),
+		100,
+	);
+	equal(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+		}).green(),
+		20,
+	);
+	equal(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+		})
+			.green(200)
+			.green(),
+		200,
+	);
+	equal(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+		}).blue(),
+		30,
+	);
+	equal(
+		Color({
+			r: 10,
+			g: 20,
+			b: 30,
+		})
+			.blue(60)
+			.blue(),
+		60,
+	);
+	equal(
+		Color({
+			h: 10,
+			s: 20,
+			l: 30,
+		}).hue(),
+		10,
+	);
+	equal(
+		Color({
+			h: 10,
+			s: 20,
+			l: 30,
+		})
+			.hue(100)
+			.hue(),
+		100,
+	);
+	equal(
+		Color({
+			h: 10,
+			w: 20,
+			b: 30,
+		}).hue(),
+		10,
+	);
+	equal(
+		Color({
+			h: 10,
+			w: 20,
+			b: 30,
+		})
+			.hue(100)
+			.hue(),
+		100,
+	);
+	equal(
+		Color({
+			h: 10,
+			s: 20,
+			l: 30,
+		}).hue(),
+		10,
+	);
+	equal(
+		Color({
+			h: 10,
+			s: 20,
+			l: 30,
+		})
+			.hue(460)
+			.hue(),
+		100,
+	);
+	equal(
+		Color({
+			h: 10,
+			w: 20,
+			b: 30,
+		}).hue(),
+		10,
+	);
+	equal(
+		Color({
+			h: 10,
+			w: 20,
+			b: 30,
+		})
+			.hue(-260)
+			.hue(),
+		100,
+	);
 });
 
 it('Setting the same value', () => {
@@ -548,38 +703,60 @@ it('Setting the same value', () => {
 });
 
 it('Capping values', () => {
-	equal(Color({
-		h: 400,
-		s: 50,
-		l: 10,
-	}).hue(), 40);
-	equal(Color({
-		h: 100,
-		s: 50,
-		l: 80,
-	}).lighten(0.5).lightness(), 100);
-	equal(Color({
-		h: -400,
-		s: 50,
-		l: 10,
-	}).hue(), 320);
+	equal(
+		Color({
+			h: 400,
+			s: 50,
+			l: 10,
+		}).hue(),
+		40,
+	);
+	equal(
+		Color({
+			h: 100,
+			s: 50,
+			l: 80,
+		})
+			.lighten(0.5)
+			.lightness(),
+		100,
+	);
+	equal(
+		Color({
+			h: -400,
+			s: 50,
+			l: 10,
+		}).hue(),
+		320,
+	);
 
 	// 0 == 360
-	equal(Color({
-		h: 400,
-		w: 50,
-		b: 10,
-	}).hue(), 40);
-	equal(Color({
-		h: 100,
-		w: 50,
-		b: 80,
-	}).blacken(0.5).wblack(), 100);
-	equal(Color({
-		h: -400,
-		w: 50,
-		b: 10,
-	}).hue(), 320);
+	equal(
+		Color({
+			h: 400,
+			w: 50,
+			b: 10,
+		}).hue(),
+		40,
+	);
+	equal(
+		Color({
+			h: 100,
+			w: 50,
+			b: 80,
+		})
+			.blacken(0.5)
+			.wblack(),
+		100,
+	);
+	equal(
+		Color({
+			h: -400,
+			w: 50,
+			b: 10,
+		}).hue(),
+		320,
+	);
 
 	equal(Color().red(400).red(), 255);
 	equal(Color().red(-400).red(), 0);
@@ -590,24 +767,38 @@ it('Capping values', () => {
 });
 
 it('Translate with channel setters', () => {
-	deepEqual(Color({
-		r: 0,
-		g: 0,
-		b: 0,
-	}).lightness(50).hsl().object(), {
-		h: 0,
-		s: 0,
-		l: 50,
-	});
-	deepEqual(Color({
-		r: 0,
-		g: 0,
-		b: 0,
-	}).red(50).green(50).hsv().round().object(), {
-		h: 60,
-		s: 100,
-		v: 20,
-	});
+	deepEqual(
+		Color({
+			r: 0,
+			g: 0,
+			b: 0,
+		})
+			.lightness(50)
+			.hsl()
+			.object(),
+		{
+			h: 0,
+			s: 0,
+			l: 50,
+		},
+	);
+	deepEqual(
+		Color({
+			r: 0,
+			g: 0,
+			b: 0,
+		})
+			.red(50)
+			.green(50)
+			.hsv()
+			.round()
+			.object(),
+		{
+			h: 60,
+			s: 100,
+			v: 20,
+		},
+	);
 });
 
 it('CSS String getters', () => {
@@ -620,22 +811,36 @@ it('CSS String getters', () => {
 	equal(Color('rgb(10, 30, 25)').rgb().string(), 'rgb(10, 30, 25)');
 	equal(Color('rgb(10, 30, 25, 0.4)').rgb().string(), 'rgba(10, 30, 25, 0.4)');
 	equal(Color('rgb(10, 30, 25)').percentString(), 'rgb(4%, 12%, 10%)');
-	equal(Color('rgb(10, 30, 25, 0.3)').percentString(), 'rgba(4%, 12%, 10%, 0.3)');
+	equal(
+		Color('rgb(10, 30, 25, 0.3)').percentString(),
+		'rgba(4%, 12%, 10%, 0.3)',
+	);
 	equal(Color('rgb(10, 30, 25)').hsl().string(), 'hsl(165, 50%, 7.8%)');
-	equal(Color('rgb(10, 30, 25, 0.3)').hsl().string(), 'hsla(165, 50%, 7.8%, 0.3)');
-	equal(Color({
-		h: 0,
-		s: 0,
-		v: 100,
-	}).hsl().string(), 'hsl(0, 0%, 100%)');
+	equal(
+		Color('rgb(10, 30, 25, 0.3)').hsl().string(),
+		'hsla(165, 50%, 7.8%, 0.3)',
+	);
+	equal(
+		Color({
+			h: 0,
+			s: 0,
+			v: 100,
+		})
+			.hsl()
+			.string(),
+		'hsl(0, 0%, 100%)',
+	);
 	equal(Color('rgb(10, 30, 25)').hwb().string(0), 'hwb(165, 4%, 88%)');
-	equal(Color('rgb(10, 30, 25, 0.3)').hwb().string(0), 'hwb(165, 4%, 88%, 0.3)');
+	equal(
+		Color('rgb(10, 30, 25, 0.3)').hwb().string(0),
+		'hwb(165, 4%, 88%, 0.3)',
+	);
 	equal(Color('rgb(0, 0, 255)').keyword(), 'blue');
 	equal(Color.rgb(155.5, 243.1555, 88.1999).string(), 'rgb(156, 243, 88)');
 });
 
 it('Number getters', () => {
-	equal(Color('rgb(10, 30, 25)').rgbNumber(), 0xA_1E_19);
+	equal(Color('rgb(10, 30, 25)').rgbNumber(), 0xa_1e_19);
 });
 
 it('luminosity, etc.', () => {
@@ -658,76 +863,140 @@ it('luminosity, etc.', () => {
 });
 
 it('Manipulators wo/ mix', () => {
-	deepEqual(Color({
-		r: 67,
-		g: 122,
-		b: 134,
-	}).grayscale().rgb().round().object(), {
-		r: 107,
-		g: 107,
-		b: 107,
-	});
-	deepEqual(Color({
-		r: 67,
-		g: 122,
-		b: 134,
-	}).negate().rgb().round().object(), {
-		r: 188,
-		g: 133,
-		b: 121,
-	});
-	equal(Color({
-		h: 100,
-		s: 50,
-		l: 60,
-	}).lighten(0.5).lightness(), 90);
-	equal(Color({
-		h: 100,
-		s: 50,
-		l: 60,
-	}).darken(0.5).lightness(), 30);
-	equal(Color({
-		h: 100,
-		w: 50,
-		b: 60,
-	}).whiten(0.5).white(), 75);
-	equal(Color({
-		h: 100,
-		w: 50,
-		b: 60,
-	}).blacken(0.5).wblack(), 90);
-	equal(Color({
-		h: 100,
-		s: 40,
-		l: 50,
-	}).saturate(0.5).saturationl(), 60);
-	equal(Color({
-		h: 100,
-		s: 80,
-		l: 60,
-	}).desaturate(0.5).saturationl(), 40);
-	equal(Color({
-		r: 10,
-		g: 10,
-		b: 10,
-		alpha: 0.8,
-	}).fade(0.5).alpha(), 0.4);
-	equal(Color({
-		r: 10,
-		g: 10,
-		b: 10,
-		alpha: 0.5,
-	}).opaquer(0.5).alpha(), 0.75);
-	equal(Color({
-		h: 60,
-		s: 0,
-		l: 0,
-	}).rotate(180).hue(), 240);
-	equal(Color({
-		h: 60,
-		s: 0,
-		l: 0,
-	}).rotate(-180).hue(), 240);
+	deepEqual(
+		Color({
+			r: 67,
+			g: 122,
+			b: 134,
+		})
+			.grayscale()
+			.rgb()
+			.round()
+			.object(),
+		{
+			r: 107,
+			g: 107,
+			b: 107,
+		},
+	);
+	deepEqual(
+		Color({
+			r: 67,
+			g: 122,
+			b: 134,
+		})
+			.negate()
+			.rgb()
+			.round()
+			.object(),
+		{
+			r: 188,
+			g: 133,
+			b: 121,
+		},
+	);
+	equal(
+		Color({
+			h: 100,
+			s: 50,
+			l: 60,
+		})
+			.lighten(0.5)
+			.lightness(),
+		90,
+	);
+	equal(
+		Color({
+			h: 100,
+			s: 50,
+			l: 60,
+		})
+			.darken(0.5)
+			.lightness(),
+		30,
+	);
+	equal(
+		Color({
+			h: 100,
+			w: 50,
+			b: 60,
+		})
+			.whiten(0.5)
+			.white(),
+		75,
+	);
+	equal(
+		Color({
+			h: 100,
+			w: 50,
+			b: 60,
+		})
+			.blacken(0.5)
+			.wblack(),
+		90,
+	);
+	equal(
+		Color({
+			h: 100,
+			s: 40,
+			l: 50,
+		})
+			.saturate(0.5)
+			.saturationl(),
+		60,
+	);
+	equal(
+		Color({
+			h: 100,
+			s: 80,
+			l: 60,
+		})
+			.desaturate(0.5)
+			.saturationl(),
+		40,
+	);
+	equal(
+		Color({
+			r: 10,
+			g: 10,
+			b: 10,
+			alpha: 0.8,
+		})
+			.fade(0.5)
+			.alpha(),
+		0.4,
+	);
+	equal(
+		Color({
+			r: 10,
+			g: 10,
+			b: 10,
+			alpha: 0.5,
+		})
+			.opaquer(0.5)
+			.alpha(),
+		0.75,
+	);
+	equal(
+		Color({
+			h: 60,
+			s: 0,
+			l: 0,
+		})
+			.rotate(180)
+			.hue(),
+		240,
+	);
+	equal(
+		Color({
+			h: 60,
+			s: 0,
+			l: 0,
+		})
+			.rotate(-180)
+			.hue(),
+		240,
+	);
 });
 
 it('Mix: basic', () => {
@@ -739,7 +1008,10 @@ it('Mix: weight', () => {
 });
 
 it('Mix: alpha', () => {
-	equal(Color('rgba(255, 0, 0, 0.5)').mix(Color('#00f')).rgb().string(0), 'rgba(64, 0, 191, 0.75)');
+	equal(
+		Color('rgba(255, 0, 0, 0.5)').mix(Color('#00f')).rgb().string(0),
+		'rgba(64, 0, 191, 0.75)',
+	);
 });
 
 it('Mix: 0%', () => {
@@ -783,8 +1055,10 @@ it('Exceptions', () => {
 
 it('Should parse alphas in RGBA hex notation correctly', () => {
 	// Tests for regression of #174
-	notStrictEqual(
-		Color('#000000ab').alpha(),
-		Color('#000000aa').alpha(),
-	);
+	notStrictEqual(Color('#000000ab').alpha(), Color('#000000aa').alpha());
+});
+
+it('Should parse alpha values in hexa notation correctly', () => {
+	equal(Color('#BADA55').alphaHex('FF').hexa(), '#BADA55FF');
+	equal(Color('#BADA55').alphaHex(), 'FF');
 });

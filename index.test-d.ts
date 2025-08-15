@@ -1,6 +1,8 @@
 import {expectType} from 'tsd';
 import Color, {
-	type ColorInstance, type ColorJson, type ColorObject,
+	type ColorInstance,
+	type ColorJson,
+	type ColorObject,
 } from './index.js';
 
 // String constructor
@@ -13,34 +15,60 @@ expectType<ColorInstance>(Color('lightblue'));
 expectType<ColorInstance>(Color('purple'));
 // RGB
 expectType<ColorInstance>(Color({r: 255, g: 255, b: 255}));
-expectType<ColorInstance>(Color({
-	r: 255, g: 255, b: 255, alpha: 0.5,
-}));
+expectType<ColorInstance>(
+	Color({
+		r: 255,
+		g: 255,
+		b: 255,
+		alpha: 0.5,
+	}),
+);
 expectType<ColorInstance>(Color.rgb(255, 255, 255));
 expectType<ColorInstance>(Color.rgb(255, 255, 255, 0.5));
-expectType<ColorInstance>(Color.rgb(0xFF, 0x00, 0x00, 0.5));
+expectType<ColorInstance>(Color.rgb(0xff, 0x00, 0x00, 0.5));
 expectType<ColorInstance>(Color.rgb([255, 255, 255]));
-expectType<ColorInstance>(Color.rgb([0xFF, 0x00, 0x00, 0.5]));
+expectType<ColorInstance>(Color.rgb([0xff, 0x00, 0x00, 0.5]));
 // HSL
 expectType<ColorInstance>(Color({h: 194, s: 53, l: 79}));
-expectType<ColorInstance>(Color({
-	h: 194, s: 53, l: 79, alpha: 0.5,
-}));
+expectType<ColorInstance>(
+	Color({
+		h: 194,
+		s: 53,
+		l: 79,
+		alpha: 0.5,
+	}),
+);
 expectType<ColorInstance>(Color.hsl(194, 53, 79));
 // HSV
 expectType<ColorInstance>(Color({h: 195, s: 25, v: 99}));
-expectType<ColorInstance>(Color({
-	h: 195, s: 25, v: 99, alpha: 0.5,
-}));
+expectType<ColorInstance>(
+	Color({
+		h: 195,
+		s: 25,
+		v: 99,
+		alpha: 0.5,
+	}),
+);
 expectType<ColorInstance>(Color.hsv(195, 25, 99));
 expectType<ColorInstance>(Color.hsv([195, 25, 99]));
 // CMYK
-expectType<ColorInstance>(Color({
-	c: 0, m: 100, y: 100, k: 0,
-}));
-expectType<ColorInstance>(Color({
-	c: 0, m: 100, y: 100, k: 0, alpha: 0.5,
-}));
+expectType<ColorInstance>(
+	Color({
+		c: 0,
+		m: 100,
+		y: 100,
+		k: 0,
+	}),
+);
+expectType<ColorInstance>(
+	Color({
+		c: 0,
+		m: 100,
+		y: 100,
+		k: 0,
+		alpha: 0.5,
+	}),
+);
 expectType<ColorInstance>(Color.cmyk(0, 100, 100, 0));
 expectType<ColorInstance>(Color.cmyk(0, 100, 100, 0, 0.5));
 // Hwb

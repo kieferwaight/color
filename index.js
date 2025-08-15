@@ -1,5 +1,5 @@
-import colorString from 'color-string';
 import convert from 'color-convert';
+import colorString from 'color-string';
 
 const skippedModels = [
 	// To be honest, I don't really feel like keyword belongs in color convert, but eh.
@@ -35,7 +35,7 @@ function Color(object, model) {
 	let i;
 	let channels;
 
-	if (object == null) { // eslint-disable-line no-eq-null,eqeqeq
+	if (object == null) {
 		this.model = 'rgb';
 		this.color = [0, 0, 0];
 		this.valpha = 1;
@@ -52,7 +52,8 @@ function Color(object, model) {
 		this.model = result.model;
 		channels = convert[this.model].channels;
 		this.color = result.value.slice(0, channels);
-		this.valpha = typeof result.value[channels] === 'number' ? result.value[channels] : 1;
+		this.valpha =
+			typeof result.value[channels] === 'number' ? result.value[channels] : 1;
 	} else if (object.length > 0) {
 		this.model = model || 'rgb';
 		channels = convert[this.model].channels;
@@ -62,11 +63,7 @@ function Color(object, model) {
 	} else if (typeof object === 'number') {
 		// This is always RGB - can be converted later on.
 		this.model = 'rgb';
-		this.color = [
-			(object >> 16) & 0xFF,
-			(object >> 8) & 0xFF,
-			object & 0xFF,
-		];
+		this.color = [(object >> 16) & 0xff, (object >> 8) & 0xff, object & 0xff];
 		this.valpha = 1;
 	} else {
 		this.valpha = 1;
@@ -79,7 +76,9 @@ function Color(object, model) {
 
 		const hashedKeys = keys.sort().join('');
 		if (!(hashedKeys in hashedModelKeys)) {
-			throw new Error('Unable to parse color from object: ' + JSON.stringify(object));
+			throw new Error(
+				'Unable to parse color from object: ' + JSON.stringify(object),
+			);
 		}
 
 		this.model = hashedModelKeys[hashedKeys];
@@ -123,13 +122,15 @@ Color.prototype = {
 	string(places) {
 		let self = this.model in colorString.to ? this : this.rgb();
 		self = self.round(typeof places === 'number' ? places : 1);
-		const arguments_ = self.valpha === 1 ? self.color : [...self.color, this.valpha];
+		const arguments_ =
+			self.valpha === 1 ? self.color : [...self.color, this.valpha];
 		return colorString.to[self.model](...arguments_);
 	},
 
 	percentString(places) {
 		const self = this.rgb().round(typeof places === 'number' ? places : 1);
-		const arguments_ = self.valpha === 1 ? self.color : [...self.color, this.valpha];
+		const arguments_ =
+			self.valpha === 1 ? self.color : [...self.color, this.valpha];
 		return colorString.to.rgb.percent(...arguments_);
 	},
 
@@ -181,15 +182,31 @@ Color.prototype = {
 
 	round(places) {
 		places = Math.max(places || 0, 0);
-		return new Color([...this.color.map(roundToPlace(places)), this.valpha], this.model);
+		return new Color(
+			[...this.color.map(roundToPlace(places)), this.valpha],
+			this.model,
+		);
 	},
 
 	alpha(value) {
 		if (value !== undefined) {
-			return new Color([...this.color, Math.max(0, Math.min(1, value))], this.model);
+			return new Color(
+				[...this.color, Math.max(0, Math.min(1, value))],
+				this.model,
+			);
 		}
 
 		return this.valpha;
+	},
+
+	alphaHex(value) {
+		if (value !== undefined) {
+			return new Color(
+				[...this.color, Math.max(0, Math.min(1, hexToAlpha(value)))],
+				this.model,
+			);
+		}
+		return alphaToHex(this.valpha);
 	},
 
 	// Rgb
@@ -197,7 +214,11 @@ Color.prototype = {
 	green: getset('rgb', 1, maxfn(255)),
 	blue: getset('rgb', 2, maxfn(255)),
 
-	hue: getset(['hsl', 'hsv', 'hsl', 'hwb', 'hcg'], 0, value => ((value % 360) + 360) % 360),
+	hue: getset(
+		['hsl', 'hsv', 'hsl', 'hwb', 'hcg'],
+		0,
+		value => ((value % 360) + 360) % 360,
+	),
 
 	saturationl: getset('hsl', 1, maxfn(100)),
 	lightness: getset('hsl', 2, maxfn(100)),
@@ -247,7 +268,7 @@ Color.prototype = {
 
 		const rgbArray = this.rgb().round().color;
 
-		let alphaHex = Math.round(this.valpha * 255).toString(16).toUpperCase();
+		let alphaHex = alphaToHex(this.valpha);
 		if (alphaHex.length === 1) {
 			alphaHex = '0' + alphaHex;
 		}
@@ -257,7 +278,7 @@ Color.prototype = {
 
 	rgbNumber() {
 		const rgb = this.rgb().color;
-		return ((rgb[0] & 0xFF) << 16) | ((rgb[1] & 0xFF) << 8) | (rgb[2] & 0xFF);
+		return ((rgb[0] & 0xff) << 16) | ((rgb[1] & 0xff) << 8) | (rgb[2] & 0xff);
 	},
 
 	luminosity() {
@@ -267,7 +288,7 @@ Color.prototype = {
 		const lum = [];
 		for (const [i, element] of rgb.entries()) {
 			const chan = element / 255;
-			lum[i] = (chan <= 0.04045) ? chan / 12.92 : ((chan + 0.055) / 1.055) ** 2.4;
+			lum[i] = chan <= 0.04045 ? chan / 12.92 : ((chan + 0.055) / 1.055) ** 2.4;
 		}
 
 		return 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2];
@@ -292,7 +313,7 @@ Color.prototype = {
 			return 'AAA';
 		}
 
-		return (contrastRatio >= 4.5) ? 'AA' : '';
+		return contrastRatio >= 4.5 ? 'AA' : '';
 	},
 
 	isDark() {
@@ -359,11 +380,11 @@ Color.prototype = {
 	},
 
 	fade(ratio) {
-		return this.alpha(this.valpha - (this.valpha * ratio));
+		return this.alpha(this.valpha - this.valpha * ratio);
 	},
 
 	opaquer(ratio) {
-		return this.alpha(this.valpha + (this.valpha * ratio));
+		return this.alpha(this.valpha + this.valpha * ratio);
 	},
 
 	rotate(degrees) {
@@ -379,7 +400,10 @@ Color.prototype = {
 		// Ported from sass implementation in C
 		// https://github.com/sass/libsass/blob/0e6b4a2850092356aa3ece07c6b249f0221caced/functions.cpp#L209
 		if (!mixinColor || !mixinColor.rgb) {
-			throw new Error('Argument to "mix" was not a Color instance, but rather an instance of ' + typeof mixinColor);
+			throw new Error(
+				'Argument to "mix" was not a Color instance, but rather an instance of ' +
+					typeof mixinColor,
+			);
 		}
 
 		const color1 = mixinColor.rgb();
@@ -389,14 +413,15 @@ Color.prototype = {
 		const w = 2 * p - 1;
 		const a = color1.alpha() - color2.alpha();
 
-		const w1 = (((w * a === -1) ? w : (w + a) / (1 + w * a)) + 1) / 2;
+		const w1 = ((w * a === -1 ? w : (w + a) / (1 + w * a)) + 1) / 2;
 		const w2 = 1 - w1;
 
 		return Color.rgb(
 			w1 * color1.red() + w2 * color2.red(),
 			w1 * color1.green() + w2 * color2.green(),
 			w1 * color1.blue() + w2 * color2.blue(),
-			color1.alpha() * p + color2.alpha() * (1 - p));
+			color1.alpha() * p + color2.alpha() * (1 - p),
+		);
 	},
 };
 
@@ -418,7 +443,10 @@ for (const model of Object.keys(convert)) {
 			return new Color(arguments_, model);
 		}
 
-		return new Color([...assertArray(convert[this.model][model].raw(this.color)), this.valpha], model);
+		return new Color(
+			[...assertArray(convert[this.model][model].raw(this.color)), this.valpha],
+			model,
+		);
 	};
 
 	// 'static' construction methods
@@ -430,6 +458,30 @@ for (const model of Object.keys(convert)) {
 
 		return new Color(color, model);
 	};
+}
+
+/**
+ * Convert alpha value (0–1) to a two-digit hex string.
+ */
+export function alphaToHex(alpha) {
+	if (alpha < 0 || alpha > 1 || isNaN(alpha)) {
+		throw new RangeError('Alpha must be between 0 and 1');
+	}
+	return Math.round(alpha * 255)
+		.toString(16)
+		.toUpperCase();
+}
+
+/**
+ * Convert a two-digit hex string to an alpha value (0–1).
+ */
+export function hexToAlpha(hex) {
+	const clean = hex.replace(/^#/, '');
+	if (!/^[0-9a-fA-F]{2}$/.test(clean)) {
+		throw new Error('Hex must be a 2-digit string');
+	}
+	const intVal = parseInt(clean, 16);
+	return intVal / 255;
 }
 
 function roundTo(number, places) {

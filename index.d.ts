@@ -1,6 +1,11 @@
 import type convert from 'color-convert';
 
-export type ColorLike = ColorInstance | string | ArrayLike<number> | number | Record<string, any>;
+export type ColorLike =
+	| ColorInstance
+	| string
+	| ArrayLike<number>
+	| number
+	| Record<string, any>;
 export type ColorJson = {model: string; color: number[]; valpha: number};
 export type ColorObject = {alpha?: number | undefined} & Record<string, number>;
 
@@ -18,6 +23,8 @@ export interface ColorInstance {
 	round(places?: number): ColorInstance;
 	alpha(): number;
 	alpha(value: number): ColorInstance;
+	alphaHex(): string;
+	alphaHex(value: string): ColorInstance;
 	red(): number;
 	red(value: number): ColorInstance;
 	green(): number;
